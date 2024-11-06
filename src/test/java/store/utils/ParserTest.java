@@ -12,7 +12,7 @@ public class ParserTest {
     void 개별_상품을_쉼표로_구분하는_테스트() {
         String userInput = "[콜라-3],[에너지바-5]";
 
-        String[] splitUserInput = userInput.split(",");
+        String[] splitUserInput = Parser.splitByDelimiter(userInput);
 
         assertThat(splitUserInput).hasSize(2);
         assertThat(splitUserInput).contains("[콜라-3]", "[에너지바-5]");
