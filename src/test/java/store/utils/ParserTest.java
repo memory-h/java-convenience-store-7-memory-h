@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import store.view.InputView;
+import store.validator.InputViewValidator;
 
 import java.util.Map;
 
@@ -30,8 +30,8 @@ public class ParserTest {
     })
     @DisplayName("상품명과 수량을 하이픈으로 구분되는지 테스트한다.")
     void 상품명과_수량은_하이픈으로_구분한다(String condition) {
-        String validateDelimiter = InputView.readProducts(condition);
-        String[] splitProducts = Parser.splitByDelimiter(validateDelimiter);
+        InputViewValidator.validateUserInputIsNotEmpty(condition);
+        String[] splitProducts = Parser.splitByDelimiter(condition);
         Map<String, String> products = Parser.splitByHyphen(splitProducts);
 
         assertThat(products).hasSize(products.size());
