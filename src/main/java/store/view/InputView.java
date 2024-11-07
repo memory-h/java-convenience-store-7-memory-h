@@ -2,10 +2,10 @@ package store.view;
 
 public class InputView {
 
-    private static final String DELIMITER_REGEX = "^\\[[^\\]]+\\](,\\[[^\\]]+\\])*$";
+    private static final String INDIVIDUAL_PRODUCT_DELIMITER_REGEX = "^\\[[^\\]]+\\](,\\[[^\\]]+\\])*$";
 
     public static String readProducts(final String userInput) {
-        Validator.validateDelimiter(userInput);
+        Validator.validateIndividualProductDelimiter(userInput);
         return userInput;
     }
 
@@ -22,8 +22,8 @@ public class InputView {
             }
         }
 
-        private static void validateDelimiter(final String userInput) {
-            if (!userInput.matches(DELIMITER_REGEX)) {
+        private static void validateIndividualProductDelimiter(final String userInput) {
+            if (!userInput.matches(INDIVIDUAL_PRODUCT_DELIMITER_REGEX)) {
                 throw new IllegalArgumentException("[ERROR] 개별 상품은 대괄호와 쉼표로 구분되어야 합니다.");
             }
         }
