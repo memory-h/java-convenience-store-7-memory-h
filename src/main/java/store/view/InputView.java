@@ -9,7 +9,18 @@ public class InputView {
         return userInput;
     }
 
+    public static String readUserInput(String userInput) {
+        Validator.validateUserInputIsNotEmpty(userInput);
+        return userInput;
+    }
+
     private static class Validator {
+
+        private static void validateUserInputIsNotEmpty(String userInput) {
+            if (userInput == null || userInput.isBlank()) {
+                throw new IllegalArgumentException("[ERROR] 상품명과 수량을 비어있을 수 없습니다.");
+            }
+        }
 
         private static void validateDelimiter(String userInput) {
             if (!userInput.matches(DELIMITER_REGEX)) {
