@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import store.validator.InputViewValidator;
+import store.validator.ProductValidator;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParserTest {
 
@@ -38,6 +40,22 @@ public class ParserTest {
         products.keySet()
                 .forEach(productName -> assertThat(products.get(productName))
                         .isEqualTo(products.get(productName)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "[콜라-3],[에너지바-5],[사이다-6]",
+            "[콜라-3],[탄산수-2],[초코바-1],[오렌지주스-10]"
+    })
+    @DisplayName("수량이 양수인지 테스트한다.")
+    void 수량이_양수인지_테스트(String condition) {
+        String[] splitProducts = Parser.splitByDelimiter(condition);
+        Map<String, String> products = Parser.splitByHyphen(splitProducts);
+
+        for (String productName : products.keySet()) {
+            ProductValidator.validatePositiveQuantity(products.get(productName));
+            assertTrue(Parser.parseIntQuantity(products.get(productName)) > 0);
+        }
     }
 
 }
