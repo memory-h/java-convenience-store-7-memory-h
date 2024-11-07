@@ -8,11 +8,13 @@ public class Parser {
 
     private static final String COMMA_DELIMITER = ",";
     private static final String HYPHEN_DELIMITER = "-";
+    private static final String BRACKETS_PATTERN = "[\\[\\]]";
+    private static final String EMPTY_STRING = "";
     private static final int PRODUCT_NAME_INDEX = 0;
     private static final int PRODUCT_QUANTITY_INDEX = 1;
 
     public static String[] splitByDelimiter(final String userInput) {
-        return userInput.split(COMMA_DELIMITER);
+        return userInput.replaceAll(BRACKETS_PATTERN, EMPTY_STRING).split(COMMA_DELIMITER);
     }
 
     public static Map<String, String> splitByHyphen(final String[] splitProducts) {

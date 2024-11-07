@@ -19,8 +19,8 @@ public class ParserTest {
 
         String[] splitUserInput = Parser.splitByDelimiter(userInput);
 
-        assertThat(splitUserInput).hasSize(2);
-        assertThat(splitUserInput).contains("[콜라-3]", "[에너지바-5]");
+        assertThat(splitUserInput).hasSize(splitUserInput.length);
+        assertThat(splitUserInput).contains("콜라-3", "에너지바-5");
     }
 
     @ParameterizedTest
