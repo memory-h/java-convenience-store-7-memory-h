@@ -1,7 +1,7 @@
 package store.utils;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Parser {
@@ -18,7 +18,7 @@ public class Parser {
     }
 
     public static Map<String, String> splitByHyphen(final String[] splitProducts) {
-        final Map<String, String> products = new HashMap<>();
+        final Map<String, String> products = new LinkedHashMap<>();
         Arrays.stream(splitProducts)
                 .forEach(product -> {
                     String[] productNameAndQuantity = product.split(HYPHEN_DELIMITER);
