@@ -54,7 +54,7 @@ public class ParserTest {
 
         for (String productName : products.keySet()) {
             ProductValidator.validatePositiveQuantity(products.get(productName));
-            assertTrue(Parser.parseIntQuantity(products.get(productName)) > 0);
+            assertTrue(Parser.parseInt(products.get(productName)) > 0);
         }
     }
 

@@ -27,8 +27,8 @@ public class Parser {
         return products;
     }
 
-    public static int parseIntQuantity(final String quantity) {
-        return Integer.parseInt(quantity);
+    public static int parseInt(final String value) {
+        return Integer.parseInt(value);
     }
 
 }
