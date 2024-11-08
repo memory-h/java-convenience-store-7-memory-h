@@ -32,7 +32,7 @@ public class StorePromotionController {
         return Promotions.from(promotions);
     }
 
-    private Promotion parsePromotion(String line) {
+    private Promotion parsePromotion(final String line) {
         String[] promotionList = line.split(COMMA_DELIMITER);
         return Promotion.of(promotionList[PROMOTION_NAME_INDEX],
                 Parser.parseInt(promotionList[PROMOTION_BUY_INDEX]),

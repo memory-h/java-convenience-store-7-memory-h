@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class PriceFormatter {
 
-    public static String formatToKoreanCurrency(String price) {
+    public static String formatToKoreanCurrency(final String price) {
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.KOREA);
         return formatter.format(Integer.parseInt(price));
     }

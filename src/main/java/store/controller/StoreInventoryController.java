@@ -41,12 +41,12 @@ public class StoreInventoryController {
         return Products.from(products);
     }
 
-    private void processProductLine(String line) {
+    private void processProductLine(final String line) {
         products.add(parseProduct(line));
         formatProductView(line);
     }
 
-    private Product parseProduct(String line) {
+    private Product parseProduct(final String line) {
         String[] productList = line.split(COMMA_DELIMITER);
         boolean promotion = isPromotion(productList);
         return Product.of(productList[NAME_INDEX],
@@ -55,11 +55,11 @@ public class StoreInventoryController {
                 promotion);
     }
 
-    private boolean isPromotion(String[] productList) {
+    private boolean isPromotion(final String[] productList) {
         return !productList[PROMOTION_INDEX].equals(NULL_STRING);
     }
 
-    private void formatProductView(String line) {
+    private void formatProductView(final String line) {
         String[] productList = line.split(COMMA_DELIMITER);
         storeInventoryView.append(BULLET_POINT)
                 .append(productList[NAME_INDEX]).append(SPACE)

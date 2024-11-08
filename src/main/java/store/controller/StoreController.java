@@ -17,9 +17,9 @@ public class StoreController {
         startPurchaseProcess(products, promotions);
     }
 
-    private void startPurchaseProcess(Products products, Promotions promotions) {
+    private void startPurchaseProcess(final Products products, final Promotions promotions) {
         String userInput = InputView.readProducts();
-        ProductsUserInput.from(userInput);
+        ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
     }
 
 }
