@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.conveniencestore;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

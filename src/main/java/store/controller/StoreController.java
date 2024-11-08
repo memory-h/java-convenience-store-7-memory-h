@@ -1,9 +1,9 @@
 package store.controller;
 
-import store.domain.Products;
+import store.domain.conveniencestore.Products;
 import store.domain.ProductsPurchase;
 import store.domain.ProductsUserInput;
-import store.domain.Promotions;
+import store.domain.conveniencestore.Promotions;
 import store.view.InputView;
 
 public class StoreController {

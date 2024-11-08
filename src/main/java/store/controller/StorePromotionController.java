@@ -1,7 +1,7 @@
 package store.controller;
 
-import store.domain.Promotion;
-import store.domain.Promotions;
+import store.domain.conveniencestore.Promotion;
+import store.domain.conveniencestore.Promotions;
 import store.utils.Parser;
 
 import java.io.BufferedReader;

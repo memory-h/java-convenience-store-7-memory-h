@@ -1,7 +1,7 @@
 package store.controller;
 
-import store.domain.Product;
-import store.domain.Products;
+import store.domain.conveniencestore.Product;
+import store.domain.conveniencestore.Products;
 import store.utils.Parser;
 import store.utils.PriceFormatter;
 import store.view.OutputView;

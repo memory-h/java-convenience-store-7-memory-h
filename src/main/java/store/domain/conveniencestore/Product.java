@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.conveniencestore;
 
 public class Product {
 

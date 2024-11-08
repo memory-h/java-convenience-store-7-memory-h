@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.conveniencestore;
 
 import java.util.Collections;
 import java.util.List;

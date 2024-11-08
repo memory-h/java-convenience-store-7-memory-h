@@ -2,6 +2,7 @@ package store.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.domain.conveniencestore.Product;
 
 import java.util.LinkedHashMap;
 import java.util.List;

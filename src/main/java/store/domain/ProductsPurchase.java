@@ -1,5 +1,7 @@
 package store.domain;
 
+import store.domain.conveniencestore.Product;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
