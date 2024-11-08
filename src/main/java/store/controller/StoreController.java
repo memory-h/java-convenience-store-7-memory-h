@@ -21,7 +21,7 @@ public class StoreController {
     private void startPurchaseProcess(final Products products, final Promotions promotions) {
         String userInput = InputView.readProducts();
         ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
-        ProductsPurchase.of(products.getProducts(), productsUserInput.getProductsUserInput());
+        ProductsPurchase productsPurchase = ProductsPurchase.of(products.getProducts(), productsUserInput.getProductsUserInput());
     }
 
 }
