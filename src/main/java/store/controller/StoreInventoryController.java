@@ -30,15 +30,15 @@ public class StoreInventoryController {
     private final List<Product> products = new ArrayList<>();
     private final StringBuilder storeInventoryView = new StringBuilder();
 
-    public void init() {
+    public Products init() {
         try(BufferedReader br = new BufferedReader(new FileReader(productFilePath))) {
             br.readLine();
             br.lines().forEach(this::processProductLine);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Products.from(products);
         OutputView.startMessage(storeInventoryView.toString());
+        return Products.from(products);
     }
 
     private void processProductLine(String line) {
