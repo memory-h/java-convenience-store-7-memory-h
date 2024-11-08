@@ -13,7 +13,7 @@ public class ProductsPurchase {
 
     public static ProductsPurchase of(List<Product> products, Map<String, Integer> productsUserInput) {
         Validator.validateProductNameAndQuantity(products, productsUserInput);
-        return new ProductsPurchase(new LinkedHashMap<>());
+        return new ProductsPurchase(productsUserInput);
     }
 
     public Map<String, Integer> getProductsPurchase() {
