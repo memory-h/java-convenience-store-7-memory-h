@@ -3,7 +3,7 @@ package store.validator;
 public class ParserValidator {
 
     private static final String INDIVIDUAL_PRODUCT_DELIMITER_REGEX = "^\\[[^\\]]+\\](,\\[[^\\]]+\\])*$";
-    private static final String PRODUCT_AND_QUANTITY_DELIMITER_REGEX = "[가-힣a-zA-Z]+-[가-힣a-zA-Z]";
+    private static final String PRODUCT_AND_QUANTITY_DELIMITER_REGEX = "[가-힣a-zA-Z]+-[0-9]+";
 
     public static void validateIndividualProductDelimiter(final String userInput) {
         if (!userInput.matches(INDIVIDUAL_PRODUCT_DELIMITER_REGEX)) {
