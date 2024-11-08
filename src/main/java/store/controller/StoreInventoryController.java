@@ -2,6 +2,7 @@ package store.controller;
 
 import store.domain.Product;
 import store.domain.Products;
+import store.utils.Parser;
 import store.utils.PriceFormatter;
 import store.view.OutputView;
 
@@ -49,8 +50,8 @@ public class StoreInventoryController {
         String[] productList = line.split(COMMA_DELIMITER);
         boolean promotion = isPromotion(productList);
         return Product.of(productList[NAME_INDEX],
-                Integer.parseInt(productList[PRICE_INDEX]),
-                Integer.parseInt(productList[QUANTITY_INDEX]),
+                Parser.parseInt(productList[PRICE_INDEX]),
+                Parser.parseInt(productList[QUANTITY_INDEX]),
                 promotion);
     }
 
