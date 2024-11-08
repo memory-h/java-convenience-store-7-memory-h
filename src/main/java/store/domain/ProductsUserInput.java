@@ -52,21 +52,21 @@ public class ProductsUserInput {
 
         private static void validateIndividualProductDelimiter(final String userInput) {
             if (!userInput.matches(INDIVIDUAL_PRODUCT_DELIMITER_REGEX)) {
-                throw new IllegalArgumentException("[ERROR] 개별 상품은 대괄호와 쉼표로 구분되어야 합니다.");
+                throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
             }
         }
 
         private static void validateProductDelimiter(final String[] splitProducts) {
             for (String splitProduct : splitProducts) {
                 if (!splitProduct.matches(PRODUCT_AND_QUANTITY_DELIMITER_REGEX)) {
-                    throw new IllegalArgumentException("[ERROR] 상품명과 수량은 하이픈으로 구분되어야 합니다.");
+                    throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
                 }
             }
         }
 
         private static void validatePositiveQuantity(final String quantity) {
             if (!quantity.matches(POSITIVE_INTEGER_PATTERN)) {
-                throw new IllegalArgumentException("[ERROR] 수량은 0보다 큰 정수여야 합니다.");
+                throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
             }
         }
 

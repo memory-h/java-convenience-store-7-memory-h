@@ -1,6 +1,7 @@
 package store.controller;
 
 import store.domain.Products;
+import store.domain.ProductsPurchase;
 import store.domain.ProductsUserInput;
 import store.domain.Promotions;
 import store.view.InputView;
@@ -20,6 +21,7 @@ public class StoreController {
     private void startPurchaseProcess(final Products products, final Promotions promotions) {
         String userInput = InputView.readProducts();
         ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
+        ProductsPurchase.of(products.getProducts(), productsUserInput.getProductsUserInput());
     }
 
 }

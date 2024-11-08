@@ -36,14 +36,14 @@ public class ProductsPurchase {
 
         private static void validateProductExists(String inputName, Map<String, Integer> productStockMap) {
             if (!productStockMap.containsKey(inputName)) {
-                throw new IllegalArgumentException("[ERROR] 편의점에 해당 상품은 존재하지 않습니다.");
+                throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
             }
         }
 
         private static void validateProductQuantity(String inputName, int inputQuantity, Map<String, Integer> productStockMap) {
             int availableQuantity = productStockMap.get(inputName);
             if (inputQuantity > availableQuantity) {
-                throw new IllegalArgumentException("[ERROR] 편의점이 보유한 수량보다 많이 구매할 수 없습니다.");
+                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
             }
         }
 

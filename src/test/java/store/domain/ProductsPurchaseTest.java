@@ -19,7 +19,7 @@ class ProductsPurchaseTest {
         productsUserInput.put("콜라", 5);
         assertThatThrownBy(() -> ProductsPurchase.of(products, productsUserInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 편의점에 해당 상품은 존재하지 않습니다.");
+                .hasMessage("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
     }
 
     @Test
@@ -30,7 +30,7 @@ class ProductsPurchaseTest {
         productsUserInput.put("콜라", 20);
         assertThatThrownBy(() -> ProductsPurchase.of(products, productsUserInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 편의점이 보유한 수량보다 많이 구매할 수 없습니다.");
+                .hasMessage("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
     }
 
 }
