@@ -2,8 +2,10 @@ package store.controller;
 
 public class StoreController {
 
-    public void run() {
+    private final StoreInventoryController storeInventoryController = new StoreInventoryController();
 
+    public void run() {
+        storeInventoryController.init();
     }
 
 }
