@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import store.validator.InputViewValidator;
-import store.validator.ProductValidator;
 
 import java.util.Map;
 
@@ -53,7 +52,6 @@ public class ParserTest {
         Map<String, String> products = Parser.splitByHyphen(splitProducts);
 
         for (String productName : products.keySet()) {
-            ProductValidator.validatePositiveQuantity(products.get(productName));
             assertTrue(Parser.parseInt(products.get(productName)) > 0);
         }
     }
