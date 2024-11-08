@@ -22,14 +22,14 @@ public class StorePromotionController {
 
     private final List<Promotion> promotions = new ArrayList<>();
 
-    public void init() {
+    public Promotions init() {
         try(BufferedReader br = new BufferedReader(new FileReader(promotionFilePath))) {
             br.readLine();
             br.lines().forEach(line -> promotions.add(parsePromotion(line)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Promotions.from(promotions);
+        return Promotions.from(promotions);
     }
 
     private Promotion parsePromotion(String line) {
