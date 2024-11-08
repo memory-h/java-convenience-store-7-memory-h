@@ -62,7 +62,7 @@ public class StoreInventoryController {
         String[] productList = line.split(COMMA_DELIMITER);
         storeInventoryView.append(BULLET_POINT)
                 .append(productList[NAME_INDEX]).append(SPACE)
-                .append(PriceFormatter.format(productList[PRICE_INDEX])).append(CURRENCY_UNIT)
+                .append(PriceFormatter.formatToKoreanCurrency(productList[PRICE_INDEX])).append(CURRENCY_UNIT)
                 .append(productList[QUANTITY_INDEX]).append(QUANTITY_UNIT);
         if (!productList[PROMOTION_INDEX].equals(NULL_STRING)) {
             storeInventoryView.append(productList[PROMOTION_INDEX]);
