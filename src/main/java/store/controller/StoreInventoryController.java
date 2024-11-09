@@ -48,15 +48,10 @@ public class StoreInventoryController {
 
     private Product parseProduct(final String line) {
         String[] productList = line.split(COMMA_DELIMITER);
-        boolean promotion = isPromotion(productList);
         return Product.of(productList[NAME_INDEX],
                 Parser.parseInt(productList[PRICE_INDEX]),
                 Parser.parseInt(productList[QUANTITY_INDEX]),
-                promotion);
-    }
-
-    private boolean isPromotion(final String[] productList) {
-        return !productList[PROMOTION_INDEX].equals(NULL_STRING);
+                productList[PROMOTION_INDEX]);
     }
 
     private void formatProductView(final String line) {
