@@ -11,6 +11,9 @@ public class PromotionCalculator {
 
     private static final int MIN_PROMOTION_QUANTITY = 0;
 
+    private PromotionCalculator() {
+    }
+
     public static Map<String, Integer> calculatePromotionPurchase(
             final Map<String, Integer> userRequests, final List<Product> products, final List<Promotion> promotions) {
 

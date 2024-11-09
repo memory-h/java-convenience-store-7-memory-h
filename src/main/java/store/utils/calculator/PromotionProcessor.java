@@ -9,6 +9,9 @@ import java.util.List;
 
 public class PromotionProcessor {
 
+    private PromotionProcessor() {
+    }
+
     public static boolean isPromotion(final List<Product> products, final String productName) {
         return products.stream()
                 .anyMatch(product -> product.getName().equals(productName) && product.getPromotion() != null);
