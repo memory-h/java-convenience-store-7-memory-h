@@ -2,9 +2,11 @@ package store.domain.conveniencestore;
 
 public class Product {
 
+    private static final int MIN_QUANTITY = 0;
+
     private final String name;
     private final int price;
-    private final int quantity;
+    private int quantity;
     private final String promotion;
 
     private Product(final String name, final int price, final int quantity, final String promotion) {
@@ -32,6 +34,10 @@ public class Product {
 
     public String getPromotion() {
         return promotion;
+    }
+
+    public void decreaseQuantity(final int quantity) {
+        this.quantity = Math.max(MIN_QUANTITY, this.quantity - quantity);
     }
 
 }
