@@ -15,12 +15,12 @@ public class PromotionCalculator {
     }
 
     public static Map<String, Integer> calculatePromotionPurchase(
-            final Map<String, Integer> productsPurchase1, final List<Product> products, final List<Promotion> promotions) {
+            final Map<String, Integer> productsPurchase, final List<Product> products, final List<Promotion> promotions) {
 
         Map<String, Integer> resultMap = new LinkedHashMap<>();
         Map<String, Integer> appliedPromotions = new LinkedHashMap<>();
 
-        productsPurchase1.forEach((productName, requestedQuantity) -> {
+        productsPurchase.forEach((productName, requestedQuantity) -> {
             processPurchase(resultMap, appliedPromotions, productName, requestedQuantity, products, promotions);
         });
         return appliedPromotions;
