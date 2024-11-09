@@ -10,7 +10,7 @@ public class ProductsUserInput {
 
     private final Map<String, Integer> productsUserInput;
 
-    private ProductsUserInput(Map<String, Integer> productsUserInput) {
+    private ProductsUserInput(final Map<String, Integer> productsUserInput) {
         this.productsUserInput = productsUserInput;
     }
 
@@ -25,17 +25,17 @@ public class ProductsUserInput {
         return Collections.unmodifiableMap(productsUserInput);
     }
 
-    private static String[] splitUserInputByDelimiter(String userInput) {
+    private static String[] splitUserInputByDelimiter(final String userInput) {
         Validator.validateIndividualProductDelimiter(userInput);
         return Parser.splitByDelimiter(userInput);
     }
 
-    private static Map<String, String> parseProductsWithQuantities(String[] splitByDelimiter) {
+    private static Map<String, String> parseProductsWithQuantities(final String[] splitByDelimiter) {
         Validator.validateProductDelimiter(splitByDelimiter);
         return Parser.splitByHyphen(splitByDelimiter);
     }
 
-    private static Map<String, Integer> convertToProductQuantityMap(Map<String, String> products) {
+    private static Map<String, Integer> convertToProductQuantityMap(final Map<String, String> products) {
         Map<String, Integer> productsUserInput = new LinkedHashMap<>();
         products.keySet().forEach(productName -> {
             Validator.validatePositiveQuantity(products.get(productName));
