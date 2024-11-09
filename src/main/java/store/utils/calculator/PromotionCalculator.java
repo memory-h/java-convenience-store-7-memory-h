@@ -15,12 +15,12 @@ public class PromotionCalculator {
     }
 
     public static Map<String, Integer> calculatePromotionPurchase(
-            final Map<String, Integer> userRequests, final List<Product> products, final List<Promotion> promotions) {
+            final Map<String, Integer> productsPurchase1, final List<Product> products, final List<Promotion> promotions) {
 
         Map<String, Integer> resultMap = new LinkedHashMap<>();
         Map<String, Integer> appliedPromotions = new LinkedHashMap<>();
 
-        userRequests.forEach((productName, requestedQuantity) -> {
+        productsPurchase1.forEach((productName, requestedQuantity) -> {
             processPurchase(resultMap, appliedPromotions, productName, requestedQuantity, products, promotions);
         });
         return appliedPromotions;
@@ -60,12 +60,11 @@ public class PromotionCalculator {
             final Product product, final int requestedQuantity, final Promotion promotion) {
 
         int promotionUnitsToGive = calculatePromotionUnits(requestedQuantity, promotion);
-        int remainingQuantity = requestedQuantity - (promotion.getBuy() * (requestedQuantity / promotion.getBuy()));
 
         if (promotionUnitsToGive > MIN_PROMOTION_QUANTITY) {
             appliedPromotions.put(product.getName(), promotionUnitsToGive);
         }
-        applyPromotionAndUpdateQuantity(product, promotionUnitsToGive, remainingQuantity);
+        product.decreaseQuantity(requestedQuantity);
         updateFinalQuantity(resultMap, product.getName(), requestedQuantity);
     }
 
@@ -74,10 +73,6 @@ public class PromotionCalculator {
         int getQuantity = promotion.getGet();
         int applicablePromotionSets = requestedQuantity / buyQuantity;
         return applicablePromotionSets * getQuantity;
-    }
-
-    private static void applyPromotionAndUpdateQuantity(final Product product, final int promotionUnitsToGive, final int remainingQuantity) {
-        product.decreaseQuantity(promotionUnitsToGive + remainingQuantity);
     }
 
     private static void handleRegularPurchase(final Map<String, Integer> resultMap, final Product product, final int requestedQuantity) {
