@@ -68,7 +68,7 @@ public class StoreInventoryController {
         storeInventoryView.append(NEW_LINE);
     }
 
-    private String getAvailableStockMessage(String[] productList) {
+    private String getAvailableStockMessage(final String[] productList) {
         if (productList[QUANTITY_INDEX].equals(EMPTY_QUANTITY)) {
             return OUT_OF_STOCK_MESSAGE;
         }
