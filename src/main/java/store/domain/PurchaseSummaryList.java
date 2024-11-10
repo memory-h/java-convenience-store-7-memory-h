@@ -7,11 +7,11 @@ public class PurchaseSummaryList {
 
     private final List<PurchaseSummary> purchaseSummaries;
 
-    private PurchaseSummaryList(List<PurchaseSummary> purchaseSummaries) {
+    private PurchaseSummaryList(final List<PurchaseSummary> purchaseSummaries) {
         this.purchaseSummaries = purchaseSummaries;
     }
 
-    public static PurchaseSummaryList from(List<PurchaseSummary> purchaseSummaries) {
+    public static PurchaseSummaryList from(final List<PurchaseSummary> purchaseSummaries) {
         return new PurchaseSummaryList(purchaseSummaries);
     }
 

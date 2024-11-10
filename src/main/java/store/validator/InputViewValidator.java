@@ -8,4 +8,8 @@ public class InputViewValidator {
         }
     }
 
+    public static void validateUserInputYesOrNo(final String userInput) {
+
+    }
+
 }

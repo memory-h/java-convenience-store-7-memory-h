@@ -9,10 +9,10 @@ public class ReceiptResult {
     private final Map<String, Integer> receiptData;
 
     private ReceiptResult(
-            int totalPurchasesReceipt,
-            int promotionDiscountReceipt,
-            int membershipDiscountReceipt,
-            int receiveToMoneyReceipt
+            final int totalPurchasesReceipt,
+            final int promotionDiscountReceipt,
+            final int membershipDiscountReceipt,
+            final int receiveToMoneyReceipt
     ) {
 
         this.receiptData = new LinkedHashMap<>();
@@ -23,10 +23,10 @@ public class ReceiptResult {
     }
 
     public static ReceiptResult of(
-            int totalPurchasesReceipt,
-            int promotionDiscountReceipt,
-            int membershipDiscountReceipt,
-            int receiveToMoneyReceipt
+            final int totalPurchasesReceipt,
+            final int promotionDiscountReceipt,
+            final int membershipDiscountReceipt,
+            final int receiveToMoneyReceipt
     ) {
         return new ReceiptResult(
                 totalPurchasesReceipt, promotionDiscountReceipt,

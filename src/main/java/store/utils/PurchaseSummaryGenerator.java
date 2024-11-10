@@ -10,7 +10,7 @@ public class PurchaseSummaryGenerator {
 
     private static final List<PurchaseSummary> purchaseSummaries = new ArrayList<>();
 
-    public static PurchaseSummaryList generateSummaryList(Map<String, Integer> productsPurchase, List<Product> products) {
+    public static PurchaseSummaryList generateSummaryList(final Map<String, Integer> productsPurchase, final List<Product> products) {
         Set<String> productNames = new LinkedHashSet<>(productsPurchase.keySet());
         for (Product product : products) {
             if (productNames.contains(product.getName())) {

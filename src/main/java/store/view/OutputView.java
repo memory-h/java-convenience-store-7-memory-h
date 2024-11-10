@@ -29,7 +29,7 @@ public class OutputView {
         printFooter(receiptData, getTotalQuantity(purchaseSummaries));
     }
 
-    private static void printHeader(List<PurchaseSummary> purchaseSummaries) {
+    private static void printHeader(final List<PurchaseSummary> purchaseSummaries) {
         System.out.println(LINE_SEPARATOR.getMessage());
         System.out.println(ITEM_MENU.getMessage());
         for (PurchaseSummary purchaseSummary : purchaseSummaries) {
@@ -57,7 +57,7 @@ public class OutputView {
             System.out.printf(FOOTER_FORMAT.getMessage(), label, amount);
         });
     }
-    private static int getTotalQuantity(List<PurchaseSummary> purchaseSummaries) {
+    private static int getTotalQuantity(final List<PurchaseSummary> purchaseSummaries) {
         return purchaseSummaries.stream()
                 .mapToInt(PurchaseSummary::getQuantity)
                 .sum();

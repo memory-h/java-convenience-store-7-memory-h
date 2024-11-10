@@ -35,11 +35,11 @@ public class PurchaseReceipt {
         return Math.min(computeMembershipDiscount(membershipDiscountAmount), MAX_MEMBERSHIP_DISCOUNT);
     }
 
-    public static int calculateFinalAmount(int totalPurchases, int promotionDiscount, int membershipDiscount) {
+    public static int calculateFinalAmount(final int totalPurchases, final int promotionDiscount, final int membershipDiscount) {
         return totalPurchases - (promotionDiscount + membershipDiscount);
     }
 
-    private static int computeTotalReceipt(Map<String, Integer> productsPurchase, List<Product> products) {
+    private static int computeTotalReceipt(final Map<String, Integer> productsPurchase, final List<Product> products) {
         int totalReceipt = DEFAULT_VALUE;
         Set<String> productNames = new LinkedHashSet<>(productsPurchase.keySet());
         for (Product product : products) {
@@ -51,7 +51,7 @@ public class PurchaseReceipt {
         return totalReceipt;
     }
 
-    private static boolean isPromotionalProduct(Set<String> productNames, Product product) {
+    private static boolean isPromotionalProduct(final Set<String> productNames, final Product product) {
         if (!product.getPromotion().equals(NOT_PROMOTION)) {
             productNames.remove(product.getName());
             return true;
