@@ -14,20 +14,20 @@ public class PromotionCalculator {
     private PromotionCalculator() {
     }
 
-    public static Map<String, Integer> calculatePromotionPurchase(
-            final Map<String, Integer> productsPurchase, final List<Product> products, final List<Promotion> promotions) {
+    public static Map<String, Integer> calculatePurchaseWithPromotions(
+            final Map<String, Integer> purchaseRequests, final List<Product> products, final List<Promotion> promotions) {
 
-        Map<String, Integer> resultMap = new LinkedHashMap<>();
-        Map<String, Integer> appliedPromotions = new LinkedHashMap<>();
+        Map<String, Integer> regularPurchaseResults = new LinkedHashMap<>();
+        Map<String, Integer> promotionResults = new LinkedHashMap<>();
 
-        productsPurchase.forEach((productName, requestedQuantity) -> {
-            processPurchase(resultMap, appliedPromotions, productName, requestedQuantity, products, promotions);
+        purchaseRequests.forEach((productName, requestedQuantity) -> {
+            applyPromotionToPurchase(regularPurchaseResults, promotionResults, productName, requestedQuantity, products, promotions);
         });
-        return appliedPromotions;
+        return promotionResults;
     }
 
-    private static void processPurchase(
-            final Map<String, Integer> resultMap, final Map<String, Integer> appliedPromotions,
+    private static void applyPromotionToPurchase(
+            final Map<String, Integer> regularPurchaseResults, final Map<String, Integer> promotionResults,
             final String productName, final int requestedQuantity,
             final List<Product> products, final List<Promotion> promotions) {
 
@@ -35,10 +35,10 @@ public class PromotionCalculator {
         Promotion promotion = findPromotionByName(promotions, product != null ? product.getPromotion() : null);
 
         if (product != null && promotion != null && PromotionProcessor.isWithinPromotionPeriod(promotion)) {
-            handlePromotionPurchase(resultMap, appliedPromotions, product, requestedQuantity, promotion);
+            processPromotionPurchase(regularPurchaseResults, promotionResults, product, requestedQuantity, promotion);
             return;
         }
-        handleRegularPurchase(resultMap, product, requestedQuantity);
+        processRegularPurchase(regularPurchaseResults, product, requestedQuantity);
     }
 
     private static Product findProductByName(final List<Product> products, final String productName) {
@@ -55,34 +55,34 @@ public class PromotionCalculator {
                 .orElse(null);
     }
 
-    private static void handlePromotionPurchase(
-            final Map<String, Integer> resultMap, final Map<String, Integer> appliedPromotions,
+    private static void processPromotionPurchase(
+            final Map<String, Integer> regularPurchaseResults, final Map<String, Integer> promotionResults,
             final Product product, final int requestedQuantity, final Promotion promotion) {
 
-        int promotionUnitsToGive = calculatePromotionUnits(requestedQuantity, promotion);
+        int freeUnits = calculateFreeUnitsForPromotion(requestedQuantity, promotion);
 
-        if (promotionUnitsToGive > MIN_PROMOTION_QUANTITY) {
-            appliedPromotions.put(product.getName(), promotionUnitsToGive);
+        if (freeUnits > MIN_PROMOTION_QUANTITY) {
+            promotionResults.put(product.getName(), freeUnits);
         }
         product.decreaseQuantity(requestedQuantity);
-        updateFinalQuantity(resultMap, product.getName(), requestedQuantity);
+        updateFinalQuantity(regularPurchaseResults, product.getName(), requestedQuantity);
     }
 
-    private static int calculatePromotionUnits(final int requestedQuantity, final Promotion promotion) {
+    private static int calculateFreeUnitsForPromotion(final int requestedQuantity, final Promotion promotion) {
         int buyQuantity = promotion.getBuy();
         int getQuantity = promotion.getGet();
         int applicablePromotionSets = requestedQuantity / buyQuantity;
         return applicablePromotionSets * getQuantity;
     }
 
-    private static void handleRegularPurchase(final Map<String, Integer> resultMap, final Product product, final int requestedQuantity) {
+    private static void processRegularPurchase(final Map<String, Integer> regularPurchaseResults, final Product product, final int requestedQuantity) {
         int availableQuantity = Math.min(requestedQuantity, product.getQuantity());
         product.decreaseQuantity(availableQuantity);
-        updateFinalQuantity(resultMap, product.getName(), availableQuantity);
+        updateFinalQuantity(regularPurchaseResults, product.getName(), availableQuantity);
     }
 
-    private static void updateFinalQuantity(final Map<String, Integer> resultMap, final String productName, final int quantity) {
-        resultMap.put(productName, quantity);
+    private static void updateFinalQuantity(final Map<String, Integer> regularPurchaseResults, final String productName, final int quantity) {
+        regularPurchaseResults.put(productName, quantity);
     }
 
 }

@@ -41,7 +41,7 @@ class PromotionCalculatorTest {
         userRequests.put("물", 3);
         userRequests.put("오렌지주스", 5);
 
-        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePromotionPurchase(userRequests, products, promotions);
+        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
         // TODO 커밋 전 삭제
         for (Product product : products) {
@@ -59,7 +59,7 @@ class PromotionCalculatorTest {
         Map<String, Integer> userRequests = new LinkedHashMap<>();
         userRequests.put("물", 3);
 
-        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePromotionPurchase(userRequests, products, promotions);
+        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
         assertThat(appliedPromotions.get("물")).isNull();
     }
@@ -70,7 +70,7 @@ class PromotionCalculatorTest {
         Map<String, Integer> userRequests = new LinkedHashMap<>();
         userRequests.put("콜라", 6);
 
-        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePromotionPurchase(userRequests, products, promotions);
+        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
         assertThat(appliedPromotions.get("콜라")).isEqualTo(3);
     }
@@ -81,7 +81,7 @@ class PromotionCalculatorTest {
         Map<String, Integer> userRequests = new LinkedHashMap<>();
         userRequests.put("물", 2);
 
-        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePromotionPurchase(userRequests, products, promotions);
+        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
         assertThat(appliedPromotions.get("물")).isNull();
     }

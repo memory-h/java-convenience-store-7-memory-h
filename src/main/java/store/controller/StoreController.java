@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static store.common.ViewMessage.YES;
-import static store.utils.calculator.PromotionCalculator.calculatePromotionPurchase;
+import static store.utils.calculator.PromotionCalculator.calculatePurchaseWithPromotions;
 import static store.utils.calculator.PurchaseReceipt.*;
 
 public class StoreController {
@@ -36,7 +36,7 @@ public class StoreController {
     private void startPurchaseProcess(final List<Product> products, final List<Promotion> promotions) {
         try {
             Map<String, Integer> productsPurchase = getProductsPurchase(products).getProductsPurchase();
-            Map<String, Integer> promotionResult = calculatePromotionPurchase(productsPurchase, products, promotions);
+            Map<String, Integer> promotionResult = calculatePurchaseWithPromotions(productsPurchase, products, promotions);
             receiptPrint(products, productsPurchase, promotionResult);
             additionalPurchase();
         } catch (IllegalArgumentException e) {
