@@ -16,7 +16,7 @@ class InputViewValidatorTest {
     void 상품명과_수량이_비어있으면_예외_발생(String condition) {
         assertThatThrownBy(() -> InputViewValidator.validateUserInputIsNotEmpty(condition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 상품명과 수량은 비어있을 수 없습니다.");
+                .hasMessage("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
     }
 
 }
