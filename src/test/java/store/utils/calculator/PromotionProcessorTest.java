@@ -1,8 +1,7 @@
-package store;
+package store.utils.calculator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.utils.calculator.PromotionProcessor;
 import store.domain.conveniencestore.Product;
 import store.domain.conveniencestore.Promotion;
 
