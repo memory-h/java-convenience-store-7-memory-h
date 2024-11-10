@@ -21,15 +21,15 @@ import static store.utils.calculator.PurchaseReceipt.*;
 
 public class StoreController {
 
+    private static final String EMPTY_STRING = "";
     private final static int DEFAULT_VALUE = 0;
 
     private final StoreInventoryController storeInventoryController = new StoreInventoryController();
     private final StorePromotionController storePromotionController = new StorePromotionController();
+    private final Products products = storeInventoryController.init();
+    private final Promotions promotions = storePromotionController.init();
 
     public void run() {
-        final Products products = storeInventoryController.init();
-        final Promotions promotions = storePromotionController.init();
-
         startPurchaseProcess(products.getProducts(), promotions.getPromotions());
     }
 
@@ -38,6 +38,7 @@ public class StoreController {
             Map<String, Integer> productsPurchase = getProductsPurchase(products).getProductsPurchase();
             Map<String, Integer> promotionResult = calculatePromotionPurchase(productsPurchase, products, promotions);
             receiptPrint(products, productsPurchase, promotionResult);
+            additionalPurchase();
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             startPurchaseProcess(products, promotions);
@@ -75,6 +76,23 @@ public class StoreController {
             getMembershipDiscountReceipt(products, productsPurchase);
         }
         return DEFAULT_VALUE;
+    }
+
+    private void additionalPurchase() {
+        try {
+            String userInput = InputView.printAdditionalPurchase();
+            isRestartRequested(userInput);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+        }
+    }
+
+    private void isRestartRequested(final String userInput) {
+        if (userInput.equals(YES.getMessage())) {
+            OutputView.startMessage(EMPTY_STRING);
+            OutputView.printMessage(products.toString());
+            run();
+        }
     }
 
 }

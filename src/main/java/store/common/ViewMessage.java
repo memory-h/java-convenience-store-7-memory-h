@@ -13,6 +13,7 @@ public enum ViewMessage {
     SEPARATOR("===================================="),
     TOTAL_FORMAT("%-9s\t\t\t%-2d\t\t%,8d%n"),
     FOOTER_FORMAT("%-9s\t\t\t\t\t%,8d%n"),
+    MESSAGE_PROMPT_FOR_ADDITIONAL_PURCHASE("\n감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)"),
     YES("Y"),
     NO("N");
 

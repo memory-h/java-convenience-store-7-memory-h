@@ -15,6 +15,10 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public static void printEmptyLine() {
+        System.out.println();
+    }
+
     public static void startMessage(final String message) {
         System.out.printf(STORE_START_MESSAGE.getMessage() + message);
     }

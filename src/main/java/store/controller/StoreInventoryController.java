@@ -32,7 +32,7 @@ public class StoreInventoryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        OutputView.startMessage(storeInventoryView.toString());
+        OutputView.startMessage(storeInventoryView.append(NEW_LINE.getMessage()).toString());
         return Products.from(products);
     }
 
