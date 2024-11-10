@@ -43,12 +43,6 @@ class PromotionCalculatorTest {
 
         Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
-        // TODO 커밋 전 삭제
-        for (Product product : products) {
-            System.out.println("product.getName() = " + product.getName());
-            System.out.println("product.getQuantity() = " + product.getQuantity());
-        }
-
         assertThat(appliedPromotions.get("콜라")).isEqualTo(2);
         assertThat(appliedPromotions.get("오렌지주스")).isEqualTo(5);
     }
