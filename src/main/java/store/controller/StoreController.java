@@ -15,10 +15,13 @@ import store.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
+import static store.common.ViewMessage.YES;
 import static store.utils.calculator.PromotionCalculator.calculatePromotionPurchase;
 import static store.utils.calculator.PurchaseReceipt.*;
 
 public class StoreController {
+
+    private final static int DEFAULT_VALUE = 0;
 
     private final StoreInventoryController storeInventoryController = new StoreInventoryController();
     private final StorePromotionController storePromotionController = new StorePromotionController();
@@ -56,9 +59,22 @@ public class StoreController {
     private ReceiptResult getReceipt(final List<Product> products, final Map<String, Integer> productsPurchase, final Map<String, Integer> promotionResult) {
         int totalPurchasesReceipt = calculateTotalPurchases(productsPurchase, products);
         int promotionDiscountReceipt = calculatePromotionDiscount(promotionResult, products);
-        int membershipDiscountReceipt = calculateMembershipDiscount(productsPurchase, products);
+        int membershipDiscountReceipt = getMembershipDiscountReceipt(products, productsPurchase);
         int receiveToMoneyReceipt = calculateFinalAmount(totalPurchasesReceipt, promotionDiscountReceipt, membershipDiscountReceipt);
         return ReceiptResult.of(totalPurchasesReceipt, promotionDiscountReceipt, membershipDiscountReceipt, receiveToMoneyReceipt);
+    }
+
+    private int getMembershipDiscountReceipt(final List<Product> products, final Map<String, Integer> productsPurchase) {
+        try {
+            String userInput = InputView.printMembershipStatus();
+            if (userInput.equals(YES.getMessage())) {
+                return calculateMembershipDiscount(productsPurchase, products);
+            }
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            getMembershipDiscountReceipt(products, productsPurchase);
+        }
+        return DEFAULT_VALUE;
     }
 
 }
