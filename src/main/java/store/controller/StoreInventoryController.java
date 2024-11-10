@@ -12,18 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static store.common.ConvenienceProductMessage.*;
+
 public class StoreInventoryController {
 
     private static final String productFilePath = "src/main/resources/products.md";
-    private static final String OUT_OF_STOCK_MESSAGE = "재고 없음";
-    private static final String EMPTY_QUANTITY = "0";
-    private static final String CURRENCY_UNIT = "원 ";
-    private static final String QUANTITY_UNIT = "개 ";
-    private static final String BULLET_POINT = "- ";
-    private static final String NEW_LINE = "\n";
-    private static final String NULL_STRING = "null";
-    private static final String COMMA_DELIMITER = ",";
-    private static final String SPACE = " ";
     private static final int NAME_INDEX = 0;
     private static final int PRICE_INDEX = 1;
     private static final int QUANTITY_INDEX = 2;
@@ -49,7 +42,7 @@ public class StoreInventoryController {
     }
 
     private Product parseProduct(final String line) {
-        String[] productList = line.split(COMMA_DELIMITER);
+        String[] productList = line.split(COMMA_DELIMITER.getMessage());
         return Product.of(productList[NAME_INDEX],
                 Parser.parseInt(productList[PRICE_INDEX]),
                 Parser.parseInt(productList[QUANTITY_INDEX]),
@@ -57,22 +50,22 @@ public class StoreInventoryController {
     }
 
     private void formatProductView(final String line) {
-        String[] productList = line.split(COMMA_DELIMITER);
-        storeInventoryView.append(BULLET_POINT)
-                .append(productList[NAME_INDEX]).append(SPACE)
-                .append(PriceFormatter.formatToKoreanCurrency(productList[PRICE_INDEX])).append(CURRENCY_UNIT)
+        String[] productList = line.split(COMMA_DELIMITER.getMessage());
+        storeInventoryView.append(BULLET_POINT.getMessage())
+                .append(productList[NAME_INDEX]).append(SPACE.getMessage())
+                .append(PriceFormatter.formatToKoreanCurrency(productList[PRICE_INDEX])).append(CURRENCY_UNIT.getMessage())
                 .append(getAvailableStockMessage(productList));
-        if (!productList[PROMOTION_INDEX].equals(NULL_STRING)) {
+        if (!productList[PROMOTION_INDEX].equals(NULL_STRING.getMessage())) {
             storeInventoryView.append(productList[PROMOTION_INDEX]);
         }
-        storeInventoryView.append(NEW_LINE);
+        storeInventoryView.append(NEW_LINE.getMessage());
     }
 
     private String getAvailableStockMessage(final String[] productList) {
-        if (productList[QUANTITY_INDEX].equals(EMPTY_QUANTITY)) {
-            return OUT_OF_STOCK_MESSAGE;
+        if (productList[QUANTITY_INDEX].equals(EMPTY_QUANTITY.getMessage())) {
+            return OUT_OF_STOCK_MESSAGE.getMessage();
         }
-        return productList[QUANTITY_INDEX] + QUANTITY_UNIT;
+        return productList[QUANTITY_INDEX] + QUANTITY_UNIT.getMessage();
     }
 
 }
