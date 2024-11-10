@@ -20,7 +20,6 @@ public class PromotionCalculator {
 
         Map<String, Integer> regularPurchaseResults = new LinkedHashMap<>();
         Map<String, Integer> promotionResults = new LinkedHashMap<>();
-
         purchaseRequests.forEach((productName, requestedQuantity) -> {
             applyPromotionToPurchase(regularPurchaseResults, promotionResults, productName, requestedQuantity, products, promotions);
         });
@@ -33,8 +32,7 @@ public class PromotionCalculator {
             final List<Product> products, final List<Promotion> promotions) {
 
         Product product = findProductByName(products, productName);
-        Promotion promotion = findPromotionByName(promotions, product != null ? product.getPromotion() : null);
-
+        Promotion promotion = getPromotionIfProductExists(promotions, product);
         if (product != null && promotion != null && PromotionProcessor.isWithinPromotionPeriod(promotion)) {
             processPromotionPurchase(regularPurchaseResults, promotionResults, product, requestedQuantity, promotion);
             return;
@@ -47,6 +45,13 @@ public class PromotionCalculator {
                 .filter(product -> product.getName().equals(productName))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static Promotion getPromotionIfProductExists(final List<Promotion> promotions, final Product product) {
+        if (product == null) {
+            return null;
+        }
+        return findPromotionByName(promotions, product.getPromotion());
     }
 
     private static Promotion findPromotionByName(final List<Promotion> promotions, final String promotionName) {
@@ -64,7 +69,6 @@ public class PromotionCalculator {
         int applicablePromotionSets = calculateApplicablePromotionSets(requestedQuantity, product, promotionUnit);
         int promotionApplicableQuantity = applicablePromotionSets * promotion.getBuy();
         int freeUnits = applicablePromotionSets * promotion.getGet();
-
         applyPromotionQuantities(regularPurchaseResults, promotionResults, product, promotionApplicableQuantity, freeUnits);
         applyRemainingQuantity(regularPurchaseResults, product, requestedQuantity, promotionApplicableQuantity);
     }
