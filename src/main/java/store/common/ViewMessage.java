@@ -3,7 +3,15 @@ package store.common;
 public enum ViewMessage {
 
     STORE_START_MESSAGE("안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n\n"),
-    INPUT_PRODUCT_NAME_AND_QUANTITY("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
+    INPUT_PRODUCT_NAME_AND_QUANTITY("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])"),
+    LINE_SEPARATOR("==============W 편의점================"),
+    ITEM_MENU("상품명\t\t\t\t수량\t\t  금액"),
+    ITEM_FORMAT("%-9s\t\t\t%-2d\t\t  %-,8d%n"),
+    PROMOTION_SEPARATOR("=============증\t\t정==============="),
+    PROMOTION_FORMAT ("%-9s\t\t\t%-2d%n"),
+    SEPARATOR("===================================="),
+    TOTAL_FORMAT("%-9s\t\t\t%-2d\t\t%,8d%n"),
+    FOOTER_FORMAT("%-9s\t\t\t\t\t%,8d%n");
 
     private final String message;
 
