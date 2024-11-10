@@ -9,7 +9,8 @@ import java.util.Map;
 
 public class PromotionCalculator {
 
-    private static final int MIN_PROMOTION_QUANTITY = 0;
+    private static final int MINIMUM_PROMOTION_QUANTITY = 0;
+    private static final int NO_REMAINING_QUANTITY = 0;
 
     private PromotionCalculator() {
     }
@@ -59,20 +60,45 @@ public class PromotionCalculator {
             final Map<String, Integer> regularPurchaseResults, final Map<String, Integer> promotionResults,
             final Product product, final int requestedQuantity, final Promotion promotion) {
 
-        int freeUnits = calculateFreeUnitsForPromotion(requestedQuantity, promotion);
+        int promotionUnit = calculatePromotionUnit(promotion);
+        int applicablePromotionSets = calculateApplicablePromotionSets(requestedQuantity, product, promotionUnit);
+        int promotionApplicableQuantity = applicablePromotionSets * promotion.getBuy();
+        int freeUnits = applicablePromotionSets * promotion.getGet();
 
-        if (freeUnits > MIN_PROMOTION_QUANTITY) {
-            promotionResults.put(product.getName(), freeUnits);
-        }
-        product.decreaseQuantity(requestedQuantity);
-        updateFinalQuantity(regularPurchaseResults, product.getName(), requestedQuantity);
+        applyPromotionQuantities(regularPurchaseResults, promotionResults, product, promotionApplicableQuantity, freeUnits);
+        applyRemainingQuantity(regularPurchaseResults, product, requestedQuantity, promotionApplicableQuantity);
     }
 
-    private static int calculateFreeUnitsForPromotion(final int requestedQuantity, final Promotion promotion) {
-        int buyQuantity = promotion.getBuy();
-        int getQuantity = promotion.getGet();
-        int applicablePromotionSets = requestedQuantity / buyQuantity;
-        return applicablePromotionSets * getQuantity;
+    private static int calculatePromotionUnit(final Promotion promotion) {
+        return promotion.getBuy() + promotion.getGet();
+    }
+
+    private static int calculateApplicablePromotionSets(final int requestedQuantity, final Product product, final int promotionUnit) {
+        return Math.min(requestedQuantity / promotionUnit, product.getQuantity() / promotionUnit);
+    }
+
+    private static void applyPromotionQuantities(
+            final Map<String, Integer> regularPurchaseResults, final Map<String, Integer> promotionResults,
+            final Product product, final int promotionApplicableQuantity, final int freeUnits) {
+
+        product.decreaseQuantity(promotionApplicableQuantity);
+        updateFinalQuantity(regularPurchaseResults, product.getName(), promotionApplicableQuantity);
+        if (freeUnits > MINIMUM_PROMOTION_QUANTITY) {
+            promotionResults.put(product.getName(), freeUnits);
+        }
+    }
+
+    private static void applyRemainingQuantity(
+            final Map<String, Integer> regularPurchaseResults, final Product product,
+            final int requestedQuantity, final int promotionApplicableQuantity) {
+
+        int remainingQuantity = requestedQuantity - promotionApplicableQuantity;
+        if (remainingQuantity <= NO_REMAINING_QUANTITY) {
+            return;
+        }
+        int regularApplicableQuantity = Math.min(remainingQuantity, product.getQuantity());
+        product.decreaseQuantity(regularApplicableQuantity);
+        updateFinalQuantity(regularPurchaseResults, product.getName(), promotionApplicableQuantity + regularApplicableQuantity);
     }
 
     private static void processRegularPurchase(final Map<String, Integer> regularPurchaseResults, final Product product, final int requestedQuantity) {
