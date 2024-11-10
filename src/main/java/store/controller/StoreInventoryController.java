@@ -15,6 +15,8 @@ import java.util.List;
 public class StoreInventoryController {
 
     private static final String productFilePath = "src/main/resources/products.md";
+    private static final String OUT_OF_STOCK_MESSAGE = "재고 없음";
+    private static final String EMPTY_QUANTITY = "0";
     private static final String CURRENCY_UNIT = "원 ";
     private static final String QUANTITY_UNIT = "개 ";
     private static final String BULLET_POINT = "- ";
@@ -59,11 +61,18 @@ public class StoreInventoryController {
         storeInventoryView.append(BULLET_POINT)
                 .append(productList[NAME_INDEX]).append(SPACE)
                 .append(PriceFormatter.formatToKoreanCurrency(productList[PRICE_INDEX])).append(CURRENCY_UNIT)
-                .append(productList[QUANTITY_INDEX]).append(QUANTITY_UNIT);
+                .append(getAvailableStockMessage(productList));
         if (!productList[PROMOTION_INDEX].equals(NULL_STRING)) {
             storeInventoryView.append(productList[PROMOTION_INDEX]);
         }
         storeInventoryView.append(NEW_LINE);
+    }
+
+    private String getAvailableStockMessage(String[] productList) {
+        if (productList[QUANTITY_INDEX].equals(EMPTY_QUANTITY)) {
+            return OUT_OF_STOCK_MESSAGE;
+        }
+        return productList[QUANTITY_INDEX] + QUANTITY_UNIT;
     }
 
 }
