@@ -36,8 +36,10 @@ public class Product {
         return promotion;
     }
 
-    public void decreaseQuantity(final int quantity) {
-        this.quantity = Math.max(MIN_QUANTITY, this.quantity - quantity);
+    public int decreaseQuantity(final int quantity) {
+        int decreaseQuantity = this.quantity - quantity;
+        this.quantity = Math.max(MIN_QUANTITY, decreaseQuantity);
+        return decreaseQuantity;
     }
 
 }

@@ -3,9 +3,7 @@ package store.utils.calculator;
 import store.domain.conveniencestore.Product;
 import store.domain.conveniencestore.Promotion;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PromotionCalculator {
 
@@ -16,11 +14,11 @@ public class PromotionCalculator {
     }
 
     public static Map<String, Integer> calculatePurchaseWithPromotions(
-            final Map<String, Integer> purchaseRequests, final List<Product> products, final List<Promotion> promotions) {
+            final Map<String, Integer> productsPurchase, final List<Product> products, final List<Promotion> promotions) {
 
         Map<String, Integer> regularPurchaseResults = new LinkedHashMap<>();
         Map<String, Integer> promotionResults = new LinkedHashMap<>();
-        purchaseRequests.forEach((productName, requestedQuantity) -> {
+        productsPurchase.forEach((productName, requestedQuantity) -> {
             applyPromotionToPurchase(regularPurchaseResults, promotionResults, productName, requestedQuantity, products, promotions);
         });
         return promotionResults;
@@ -34,7 +32,7 @@ public class PromotionCalculator {
         Product product = findProductByName(products, productName);
         Promotion promotion = getPromotionIfProductExists(promotions, product);
         if (product != null && promotion != null && PromotionProcessor.isWithinPromotionPeriod(promotion)) {
-            processPromotionPurchase(regularPurchaseResults, promotionResults, product, requestedQuantity, promotion);
+            processPromotionPurchase(regularPurchaseResults, promotionResults, product, products , requestedQuantity, promotion);
             return;
         }
         processRegularPurchase(regularPurchaseResults, product, requestedQuantity);
@@ -63,14 +61,14 @@ public class PromotionCalculator {
 
     private static void processPromotionPurchase(
             final Map<String, Integer> regularPurchaseResults, final Map<String, Integer> promotionResults,
-            final Product product, final int requestedQuantity, final Promotion promotion) {
+            final Product product, final List<Product> products, final int requestedQuantity, final Promotion promotion) {
 
         int promotionUnit = calculatePromotionUnit(promotion);
         int applicablePromotionSets = calculateApplicablePromotionSets(requestedQuantity, product, promotionUnit);
-        int promotionApplicableQuantity = applicablePromotionSets * promotion.getBuy();
+        int promotionApplicableQuantity = applicablePromotionSets * (promotion.getBuy() + promotion.getGet());
         int freeUnits = applicablePromotionSets * promotion.getGet();
         applyPromotionQuantities(regularPurchaseResults, promotionResults, product, promotionApplicableQuantity, freeUnits);
-        applyRemainingQuantity(regularPurchaseResults, product, requestedQuantity, promotionApplicableQuantity);
+        applyRemainingQuantity(regularPurchaseResults, product, products, requestedQuantity, promotionApplicableQuantity);
     }
 
     private static int calculatePromotionUnit(final Promotion promotion) {
@@ -94,15 +92,16 @@ public class PromotionCalculator {
 
     private static void applyRemainingQuantity(
             final Map<String, Integer> regularPurchaseResults, final Product product,
-            final int requestedQuantity, final int promotionApplicableQuantity) {
+            final List<Product> products, final int requestedQuantity, final int promotionApplicableQuantity) {
 
         int remainingQuantity = requestedQuantity - promotionApplicableQuantity;
+        int remainingToDecrease = Math.abs(product.decreaseQuantity(remainingQuantity));
         if (remainingQuantity <= NO_REMAINING_QUANTITY) {
             return;
         }
-        int regularApplicableQuantity = Math.min(remainingQuantity, product.getQuantity());
-        product.decreaseQuantity(regularApplicableQuantity);
-        updateFinalQuantity(regularPurchaseResults, product.getName(), promotionApplicableQuantity + regularApplicableQuantity);
+        Product regularProduct = ProductFinderUtil.findRegularProductByName(products, product.getName());
+        regularProduct.decreaseQuantity(remainingToDecrease);
+        updateFinalQuantity(regularPurchaseResults, regularProduct.getName(), remainingToDecrease);
     }
 
     private static void processRegularPurchase(final Map<String, Integer> regularPurchaseResults, final Product product, final int requestedQuantity) {
