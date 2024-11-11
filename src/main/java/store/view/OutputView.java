@@ -10,6 +10,7 @@ import static store.common.ViewMessage.*;
 public class OutputView {
 
     private static final String TOTAL_PURCHASE_LABEL = "총구매액";
+    private static final String FINAL_AMOUNT_LABEL = "내실돈";
     private static final String ZERO_AMOUNT_DISPLAY = "-0";
     private static final String AMOUNT_FORMAT = "%,d";
     private static final int ZERO_AMOUNT = 0;
@@ -33,6 +34,7 @@ public class OutputView {
     ) {
         printHeader(purchaseSummaries);
         printPromotions(promotionResult);
+        System.out.println(SEPARATOR.getMessage());
         printFooter(receiptData, getTotalQuantity(purchaseSummaries));
     }
 
@@ -55,15 +57,26 @@ public class OutputView {
     }
 
     private static void printFooter(final Map<String, Integer> receiptData, final int totalQuantity) {
-        System.out.println(SEPARATOR.getMessage());
         receiptData.forEach((label, amount) -> {
-            if (label.equals(TOTAL_PURCHASE_LABEL)) {
-                System.out.printf(TOTAL_FORMAT.getMessage(), label, totalQuantity, amount);
+            if (printSpecialLabels(totalQuantity, label, amount)) {
                 return;
             }
             System.out.printf(FOOTER_FORMAT.getMessage(), label, formatAmount(amount));
         });
     }
+
+    private static boolean printSpecialLabels(int totalQuantity, String label, Integer amount) {
+        if (label.equals(TOTAL_PURCHASE_LABEL)) {
+            System.out.printf(TOTAL_FORMAT.getMessage(), label, totalQuantity, amount);
+            return true;
+        }
+        if (label.equals(FINAL_AMOUNT_LABEL)) {
+            System.out.printf(FINAL_AMOUNT_FORMAT.getMessage(), label, amount);
+            return true;
+        }
+        return false;
+    }
+
     private static int getTotalQuantity(final List<PurchaseSummary> purchaseSummaries) {
         return purchaseSummaries.stream()
                 .mapToInt(PurchaseSummary::getQuantity)
