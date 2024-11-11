@@ -3,6 +3,7 @@ package store.utils.calculator;
 import store.domain.conveniencestore.Product;
 import store.domain.conveniencestore.Promotion;
 import store.view.InputView;
+import store.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,14 @@ public class PromotionEligibilityChecker {
     }
 
     private static void promptForPromotionConfirmation(final Map<String, Integer> productsUserInput, final String productName, int needQuantity) {
-        String userInput = InputView.promptForNonPromotionPurchaseConfirmation(productName, needQuantity);
-        if (userInput.equals(NO.getMessage())) {
-            productsUserInput.put(productName, productsUserInput.get(productName) - needQuantity);
+        try {
+            String userInput = InputView.promptForNonPromotionPurchaseConfirmation(productName, needQuantity);
+            if (userInput.equals(NO.getMessage())) {
+                productsUserInput.put(productName, productsUserInput.get(productName) - needQuantity);
+            }
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            promptForPromotionConfirmation(productsUserInput, productName, needQuantity);
         }
     }
 
@@ -99,9 +105,14 @@ public class PromotionEligibilityChecker {
     }
 
     private static void promptForAdditionalQuantity(final Map<String, Integer> productsUserInput, final String productName, int requiredAdditionalQuantity) {
-        String userInput = InputView.promptForAdditionalQuantity(productName, requiredAdditionalQuantity);
-        if (userInput.equals(YES.getMessage())) {
-            productsUserInput.put(productName, productsUserInput.get(productName) + requiredAdditionalQuantity);
+        try {
+            String userInput = InputView.promptForAdditionalQuantity(productName, requiredAdditionalQuantity);
+            if (userInput.equals(YES.getMessage())) {
+                productsUserInput.put(productName, productsUserInput.get(productName) + requiredAdditionalQuantity);
+            }
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            promptForAdditionalQuantity(productsUserInput, productName, requiredAdditionalQuantity);
         }
     }
 
