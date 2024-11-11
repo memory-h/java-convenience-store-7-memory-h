@@ -6,6 +6,11 @@ import java.util.Map;
 
 public class ReceiptResult {
 
+    private static final String TOTAL_PURCHASES = "총구매액";
+    private static final String PROMOTION_DISCOUNT = "행사할인";
+    private static final String MEMBERSHIP_DISCOUNT = "멤버십할인";
+    private static final String FINAL_AMOUNT = "내실돈";
+
     private final Map<String, Integer> receiptData;
 
     private ReceiptResult(
@@ -16,10 +21,10 @@ public class ReceiptResult {
     ) {
 
         this.receiptData = new LinkedHashMap<>();
-        receiptData.put("총구매액", totalPurchasesReceipt);
-        receiptData.put("행사할인", -promotionDiscountReceipt);
-        receiptData.put("멤버십할인", -membershipDiscountReceipt);
-        receiptData.put("내실돈", receiveToMoneyReceipt);
+        receiptData.put(TOTAL_PURCHASES, totalPurchasesReceipt);
+        receiptData.put(PROMOTION_DISCOUNT, -promotionDiscountReceipt);
+        receiptData.put(MEMBERSHIP_DISCOUNT, -membershipDiscountReceipt);
+        receiptData.put(FINAL_AMOUNT, receiveToMoneyReceipt);
     }
 
     public static ReceiptResult of(

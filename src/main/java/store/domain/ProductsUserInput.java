@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static store.common.exception.ErrorMessage.INVALID_FORMAT;
+import static store.common.exception.ErrorMessage.INVALID_INPUT;
 import static store.utils.calculator.PromotionEligibilityChecker.validateAndPromptAdditionalQuantity;
 
 public class ProductsUserInput {
@@ -60,21 +62,21 @@ public class ProductsUserInput {
 
         private static void validateIndividualProductDelimiter(final String userInput) {
             if (!userInput.matches(INDIVIDUAL_PRODUCT_DELIMITER_REGEX)) {
-                throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(INVALID_FORMAT.getMessage());
             }
         }
 
         private static void validateProductDelimiter(final String[] splitProducts) {
             for (String splitProduct : splitProducts) {
                 if (!splitProduct.matches(PRODUCT_AND_QUANTITY_DELIMITER_REGEX)) {
-                    throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.");
+                    throw new IllegalArgumentException(INVALID_FORMAT.getMessage());
                 }
             }
         }
 
         private static void validatePositiveQuantity(final String quantity) {
             if (!quantity.matches(POSITIVE_INTEGER_PATTERN)) {
-                throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(INVALID_INPUT.getMessage());
             }
         }
 

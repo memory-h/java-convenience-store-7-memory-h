@@ -5,6 +5,9 @@ import store.domain.conveniencestore.Product;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static store.common.exception.ErrorMessage.EXCEEDING_STOCK_QUANTITY;
+import static store.common.exception.ErrorMessage.NON_EXISTENT_PRODUCT;
+
 public class ProductsPurchase {
 
     private final Map<String, Integer> productsPurchase;
@@ -38,14 +41,14 @@ public class ProductsPurchase {
 
         private static void validateProductExists(final String inputName, final Map<String, Integer> productStockMap) {
             if (!productStockMap.containsKey(inputName)) {
-                throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(NON_EXISTENT_PRODUCT.getMessage());
             }
         }
 
         private static void validateProductQuantity(final String inputName, final int inputQuantity, final Map<String, Integer> productStockMap) {
             int availableQuantity = productStockMap.get(inputName);
             if (inputQuantity > availableQuantity) {
-                throw new IllegalArgumentException("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(EXCEEDING_STOCK_QUANTITY.getMessage());
             }
         }
 
