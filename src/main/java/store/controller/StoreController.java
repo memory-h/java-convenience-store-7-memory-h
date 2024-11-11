@@ -42,16 +42,28 @@ public class StoreController {
             additionalPurchase();
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            startPurchaseProcess(products, promotions);
+            getProductsPurchase(products);
         }
     }
 
     private ProductsPurchase getProductsPurchase(final List<Product> products) {
-        String userInput = InputView.readProducts();
-        ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
-        productsUserInput.checkPromotionEligibilityAndUpdateQuantity(productsUserInput.getProductsUserInput(), products, promotions.getPromotions());
-        Map<String, Integer> productsPurchaseMap = new LinkedHashMap<>(ProductsPurchase.of(products, productsUserInput.getProductsUserInput()).getProductsPurchase());
+        Map<String, Integer> productsPurchaseMap = null;
+        try {
+            String userInput = InputView.readProducts();
+            productsPurchaseMap = processUserInputAndCreatePurchaseMap(userInput, products);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            getProductsPurchase(products);
+        }
         return ProductsPurchase.of(products, productsPurchaseMap);
+    }
+
+    private Map<String, Integer> processUserInputAndCreatePurchaseMap(final String userInput, final List<Product> products) {
+        ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
+        productsUserInput.checkPromotionEligibilityAndUpdateQuantity(
+                productsUserInput.getProductsUserInput(), products, promotions.getPromotions()
+        );
+        return new LinkedHashMap<>(ProductsPurchase.of(products, productsUserInput.getProductsUserInput()).getProductsPurchase());
     }
 
     private void receiptPrint(final List<Product> products, final Map<String, Integer> productsPurchase, final Map<String, Integer> promotionResult) {

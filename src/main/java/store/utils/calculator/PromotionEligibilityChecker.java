@@ -47,7 +47,7 @@ public class PromotionEligibilityChecker {
                 return computeRequiredQuantity(productsUserInput, product, promotion);
             }
         }
-        return NO_ADDITIONAL_QUANTITY;
+        return productsUserInput.get(product.getName());
     }
 
     private static int computeRequiredQuantity(final Map<String, Integer> productsUserInput, final Product product, final Promotion promotion) {
@@ -57,10 +57,7 @@ public class PromotionEligibilityChecker {
 
     private static void promptForPromotionConfirmation(final Map<String, Integer> productsUserInput, final String productName, int needQuantity) {
         try {
-            String userInput = InputView.promptForNonPromotionPurchaseConfirmation(productName, needQuantity);
-            if (userInput.equals(NO.getMessage())) {
-                productsUserInput.put(productName, productsUserInput.get(productName) - needQuantity);
-            }
+            InputView.promptForNonPromotionPurchaseConfirmation(productName, needQuantity);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             promptForPromotionConfirmation(productsUserInput, productName, needQuantity);
