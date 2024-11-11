@@ -1,14 +1,18 @@
 package store.domain;
 
+import store.domain.conveniencestore.Product;
+import store.domain.conveniencestore.Promotion;
 import store.utils.Parser;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import static store.utils.calculator.PromotionEligibilityChecker.validateAndPromptAdditionalQuantity;
 
 public class ProductsUserInput {
 
-    private final Map<String, Integer> productsUserInput;
+    private Map<String, Integer> productsUserInput;
 
     private ProductsUserInput(final Map<String, Integer> productsUserInput) {
         this.productsUserInput = productsUserInput;
@@ -22,7 +26,11 @@ public class ProductsUserInput {
     }
 
     public Map<String, Integer> getProductsUserInput() {
-        return Collections.unmodifiableMap(productsUserInput);
+        return productsUserInput;
+    }
+
+    public void checkPromotionEligibilityAndUpdateQuantity(final Map<String, Integer> productsUserInput, final List<Product> products, final List<Promotion> promotions) {
+        validateAndPromptAdditionalQuantity(productsUserInput, products, promotions);
     }
 
     private static String[] splitUserInputByDelimiter(final String userInput) {

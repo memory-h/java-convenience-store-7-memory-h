@@ -12,6 +12,7 @@ import store.utils.PurchaseSummaryGenerator;
 import store.view.InputView;
 import store.view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,9 @@ public class StoreController {
     private ProductsPurchase getProductsPurchase(final List<Product> products) {
         String userInput = InputView.readProducts();
         ProductsUserInput productsUserInput = ProductsUserInput.from(userInput);
-        return ProductsPurchase.of(products, productsUserInput.getProductsUserInput());
+        productsUserInput.checkPromotionEligibilityAndUpdateQuantity(productsUserInput.getProductsUserInput(), products, promotions.getPromotions());
+        Map<String, Integer> productsPurchaseMap = new LinkedHashMap<>(ProductsPurchase.of(products, productsUserInput.getProductsUserInput()).getProductsPurchase());
+        return ProductsPurchase.of(products, productsPurchaseMap);
     }
 
     private void receiptPrint(final List<Product> products, final Map<String, Integer> productsPurchase, final Map<String, Integer> promotionResult) {
