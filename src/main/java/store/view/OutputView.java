@@ -10,6 +10,9 @@ import static store.common.ViewMessage.*;
 public class OutputView {
 
     private static final String TOTAL_PURCHASE_LABEL = "총구매액";
+    private static final String ZERO_AMOUNT_DISPLAY = "-0";
+    private static final String AMOUNT_FORMAT = "%,d";
+    private static final int ZERO_AMOUNT = 0;
 
     public static void printMessage(final String message) {
         System.out.println(message);
@@ -58,13 +61,20 @@ public class OutputView {
                 System.out.printf(TOTAL_FORMAT.getMessage(), label, totalQuantity, amount);
                 return;
             }
-            System.out.printf(FOOTER_FORMAT.getMessage(), label, amount);
+            System.out.printf(FOOTER_FORMAT.getMessage(), label, formatAmount(amount));
         });
     }
     private static int getTotalQuantity(final List<PurchaseSummary> purchaseSummaries) {
         return purchaseSummaries.stream()
                 .mapToInt(PurchaseSummary::getQuantity)
                 .sum();
+    }
+
+    private static String formatAmount(int amount) {
+        if (amount == ZERO_AMOUNT) {
+            return ZERO_AMOUNT_DISPLAY;
+        }
+        return String.format(AMOUNT_FORMAT, amount);
     }
 
 }
