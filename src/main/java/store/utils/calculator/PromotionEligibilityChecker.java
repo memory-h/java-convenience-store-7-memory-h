@@ -1,20 +1,19 @@
 package store.utils.calculator;
 
-import store.domain.conveniencestore.Product;
-import store.domain.conveniencestore.Promotion;
-import store.view.InputView;
-import store.view.OutputView;
+import store.domain.conveniencestore.*;
+import store.view.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static store.common.ViewMessage.NO;
-import static store.common.ViewMessage.YES;
+import static store.common.ViewMessage.*;
 
 public class PromotionEligibilityChecker {
 
     private static final String NOT_PROMOTION = "null";
     private static final int NO_ADDITIONAL_QUANTITY = 0;
+
+    private PromotionEligibilityChecker() {
+    }
 
     public static void validateAndPromptAdditionalQuantity(final Map<String, Integer> productsUserInput, final List<Product> products, final List<Promotion> promotions) {
         for (Product product : products) {
@@ -92,19 +91,19 @@ public class PromotionEligibilityChecker {
         return productQuantity < promotionTotalQuantity;
     }
 
-    private static void handleShortageQuantity(final Map<String, Integer> productsUserInput, final Product product, int promotionTotalQuantity, int productQuantity) {
+    private static void handleShortageQuantity(final Map<String, Integer> productsUserInput, final Product product, int promotionTotalQuantity, final int productQuantity) {
         int requiredAdditionalQuantity = promotionTotalQuantity - productQuantity;
         promptForAdditionalQuantity(productsUserInput, product.getName(), requiredAdditionalQuantity);
     }
 
-    private static void handleRemainingPromotionQuantity(final Map<String, Integer> productsUserInput, final Product product, int promotionTotalQuantity, int productQuantity) {
+    private static void handleRemainingPromotionQuantity(final Map<String, Integer> productsUserInput, final Product product, final int promotionTotalQuantity, final int productQuantity) {
         int needQuantity = productQuantity % promotionTotalQuantity;
         if (needQuantity > NO_ADDITIONAL_QUANTITY) {
             promptForAdditionalQuantity(productsUserInput, product.getName(), needQuantity);
         }
     }
 
-    private static void promptForAdditionalQuantity(final Map<String, Integer> productsUserInput, final String productName, int requiredAdditionalQuantity) {
+    private static void promptForAdditionalQuantity(final Map<String, Integer> productsUserInput, final String productName, final int requiredAdditionalQuantity) {
         try {
             String userInput = InputView.promptForAdditionalQuantity(productName, requiredAdditionalQuantity);
             if (userInput.equals(YES.getMessage())) {

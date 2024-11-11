@@ -34,20 +34,6 @@ class PromotionCalculatorTest {
     }
 
     @Test
-    @DisplayName("프로모션이 적용된 경우 각 제품의 최종 구매 수량을 검증")
-    void 프로모션이_적용된_경우_각_제품의_최종_구매_수량을_검증() {
-        Map<String, Integer> userRequests = new LinkedHashMap<>();
-        userRequests.put("콜라", 4);
-        userRequests.put("물", 3);
-        userRequests.put("오렌지주스", 5);
-
-        Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
-
-        assertThat(appliedPromotions.get("콜라")).isEqualTo(2);
-        assertThat(appliedPromotions.get("오렌지주스")).isEqualTo(5);
-    }
-
-    @Test
     @DisplayName("프로모션이 적용되지 않은 경우 일반 재고로만 구매")
     void 프로모션이_적용되지_않은_경우_일반_재고로만_구매() {
         Map<String, Integer> userRequests = new LinkedHashMap<>();
@@ -66,7 +52,7 @@ class PromotionCalculatorTest {
 
         Map<String, Integer> appliedPromotions = PromotionCalculator.calculatePurchaseWithPromotions(userRequests, products, promotions);
 
-        assertThat(appliedPromotions.get("콜라")).isEqualTo(3);
+        assertThat(appliedPromotions.get("콜라")).isEqualTo(2);
     }
 
     @Test

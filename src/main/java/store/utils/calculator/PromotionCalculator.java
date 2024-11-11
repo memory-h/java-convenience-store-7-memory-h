@@ -1,7 +1,6 @@
 package store.utils.calculator;
 
-import store.domain.conveniencestore.Product;
-import store.domain.conveniencestore.Promotion;
+import store.domain.conveniencestore.*;
 
 import java.util.*;
 
